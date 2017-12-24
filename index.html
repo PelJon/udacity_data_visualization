@@ -1,7 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript">
+    function draw(baseball_data) {
+        //create the dimensions for the diagram
+        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+        //initialization of the variables x, y and color in the scatterplot
+        var x = d3.scale.linear()
+                .range([0, width]);
+        var y = d3.scale.linear()
+                .range([height, 0]);
+        var color = d3.scale.category20c();
+
+        //initialization of the x and y Axis in the scatterplot
+        var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+        var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+        //initialization of the svg object containing the diagram
+        var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        
+    };
+  </script>
 </head>
 <body>
+  <script type="text/javascript">
+    //Use D3 to load the baseball_data file
+    d3.csv("baseball_data.csv", draw);
+  </script>
 </body>
 </html>
