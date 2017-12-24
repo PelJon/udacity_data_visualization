@@ -32,7 +32,65 @@
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        
+        //transform data for scatterplot, aggregation of continous data
+        d3.csv("baseball_data.csv", function(error, data) {
+          if (error) throw error;
+
+          data.forEach(function(d) {
+            d["height"] = +d["height"];
+            d["weight"] = +d["weight"];
+            d["avg"] = +d["avg"];
+            d["HR"] = +d["HR"];
+          });
+        });
+
+        //scale the intervals for height and avg so they fit into the grafic
+        x.domain(d3.extent(baseball_data, function(d) {
+          return d['height'];
+        })).nice();
+        y.domain(d3.extent(baseball_data, function(d) {
+          return d['avg'];
+        })).nice();
+
+        //append x axis to g element in svg object and label it
+        svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis)
+          .append("text")
+          .attr("class", "label")
+          .attr("x", width)
+          .attr("y", -6)
+          .style("text-anchor", "end")
+          .text("Height Player (inches)");
+
+        //append y axis to g element in svg object and label it
+        svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .append("text")
+          .attr("class", "label")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Betting Average")
+
+        svg.selectAll(".dot")
+          .data(baseball_data)
+          .enter()
+          .append("circle")
+          .attr("class", "dot")
+          .attr("r", 3.5)
+          .attr("cx", function(d) {
+            return x(d.height);
+          })
+         .attr("cy", function(d) {
+           return y(d.avg);
+         })
+         .style("fill", function(d) {
+           return color(d.handedness);
+         });
     };
   </script>
 </head>
