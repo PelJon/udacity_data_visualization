@@ -19,3 +19,4 @@ The reader of the visualization which will be a viewer-driven narrative. The rea
 # Ressources
 * Scatterplot - https://bl.ocks.org/mbostock/3887118
 * Simple Scatterplot - https://stackoverflow.com/questions/10440646/a-simple-scatterplot-example-in-d3-js
+* mouseover-function - http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
