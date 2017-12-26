@@ -32,18 +32,6 @@ Lastly, the viewer can mouse-over specific data points and get more detailed inf
 **Feedback 3. Person:**
 * Give the reader the option to separate by handedness via buttons
 
-**Feedback 1. Person:**
-* Add instructions to start a python server at README.me so the reader is able to understand how to render the visualization
-* Add correlation line to better support the findings of the viewer
-* Add R-Square calculation information to give the viewer a concrete number
-
-**Feedback 2. Person:**
-* Add correlation line to better support the findings of the viewer
-* Add separate the correlation for handedness of the player
-
-**Feedback 3. Person:**
-* Give the reader the option to separate by handedness via buttons
-
 # Ressources
 * Scatterplot - https://bl.ocks.org/mbostock/3887118
 * Simple Scatterplot - https://stackoverflow.com/questions/10440646/a-simple-scatterplot-example-in-d3-js
