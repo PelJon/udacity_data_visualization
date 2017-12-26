@@ -28,7 +28,11 @@ The viewer-driven narrative is able to decide if he wants have the height or wei
 Lastly, the viewer can mouse-over specific data points and get more detailed information about the name and the specific score of each variable. In summary, the viewer should be possible to detect patterns based on the available visualization and further information.
 
 **First Feedback Iteration:**
-1. I included correlations in the vizualization to support the reader in the  discovery process of the data.
+1. I included a correlation line in the visualization to support the reader in the discovery process of the data.
+2. I included further instructions in the README.me file to help the viewer.
+3. I changed the update function so that the correlation will be updated by selected dimensions.
+4. I calculated the Pearson-correlation and let it update if the viewer changes the dimensions of the visualization.
+5. I included a mouse-over function to show the Pearson-correlation to the reader.
 
 # Feedback
 **Feedback 1. Person:**
@@ -51,3 +55,6 @@ Lastly, the viewer can mouse-over specific data points and get more detailed inf
 * mouseover-function - http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
 * regression-line - https://bl.ocks.org/nanu146/de5bd30782dfe18fa5efa0d8d299abce
 * pearsonCorrelation - https://gist.github.com/matt-west/6500993
+* Math.pow() documentation - https://www.w3schools.com/jsref/jsref_pow.asp
+* Square elements of array - https://gist.github.com/Atlas7/b2d2e211da7cd45d4213a9bb7f4ed522
+* calculate regression - http://www.statisticshowto.com/probability-and-statistics/regression-analysis/find-a-linear-regression-equation/
