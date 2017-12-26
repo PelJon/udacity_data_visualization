@@ -4,11 +4,23 @@
   <meta charset="utf-8">
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <style>
-    div.tooltip {
+    .player_information {
       position: absolute;
       text-align: left;
       width: 120px;
       height: 70px;
+      padding: 2px;
+      font: 12px sans-serif;
+      background: lightsteelblue;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    .pearson {
+      position: absolute;
+      text-align: left;
+      width: 130px;
+      height: 30px;
       padding: 2px;
       font: 12px sans-serif;
       background: lightsteelblue;
@@ -64,6 +76,7 @@
 
         // Global variable declaration of regression line equation and update function
         var regression;
+        var pearson_correlation;
         var length_sample = baseball_data.length;
         var dimensions = ["Height", "Weight", "Batting Avg.", "Home runs"];
         var x_axis_dimension = "height";
@@ -123,11 +136,79 @@
                      .x(function(d) { return x(d[x_axis_dimension]); })
                      .y(function(d) { return y(regression(d[x_axis_dimension])); });
 
-                     //create line on object
+
+          //calculate pearson correlation
+          pearson_correlation = Math.round(pearsonCorrelation(baseball_data, x_axis_dimension, y_axis_dimension) * 10000) / 10000;
+
+          //create line on object
           svg.append("path")
-            .datum(baseball_data)
-            .attr("class", "line")
-            .attr("d", line);
+             .datum(baseball_data)
+             .attr("class", "line")
+             .attr("d", line)
+             .on("mouseover", function (d) {
+               div.transition()
+                  .duration(200)
+                  .style("opacity", 0.9);
+               div.html("<b>" + "Pearson Correlation: " + "</b>" + "<br/>" + pearson_correlation)
+                  .attr("class", "pearson")
+                  .style("left", (d3.event.pageX) + "px")
+                  .style("top", (d3.event.pageY - 28) + "px");
+            })
+             .on("mouseout", function(d) {
+               div.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+            });
+        }
+
+        //calculate pearson_correlation
+        function pearsonCorrelation(data, x_axis_dimension, y_axis_dimension) {
+            var si = [];
+            var list_x = [];
+            var list_y = [];
+
+            data.forEach(function(d) {
+              list_y.push(parseFloat(d[y_axis_dimension]));
+              list_x.push(parseFloat(d[x_axis_dimension]));
+            });
+
+            var prefs = [list_x, list_y];
+
+            for (var key in prefs[0]) {
+              if (prefs[1][key]) si.push(key);
+            }
+
+            var n = si.length;
+
+            if (n == 0) return 0;
+
+            var sum1 = 0;
+            for (var i = 0; i < si.length; i++) sum1 += prefs[0][si[i]];
+
+            var sum2 = 0;
+            for (var i = 0; i < si.length; i++) sum2 += prefs[1][si[i]];
+
+            var sum1Sq = 0;
+            for (var i = 0; i < si.length; i++) {
+              sum1Sq += Math.pow(prefs[0][si[i]], 2);
+            }
+
+            var sum2Sq = 0;
+            for (var i = 0; i < si.length; i++) {
+              sum2Sq += Math.pow(prefs[1][si[i]], 2);
+            }
+
+            var pSum = 0;
+            for (var i = 0; i < si.length; i++) {
+              pSum += prefs[0][si[i]] * prefs[1][si[i]];
+            }
+
+            var num = pSum - (sum1 * sum2 / n);
+            var den = Math.sqrt((sum1Sq - Math.pow(sum1, 2) / n) *
+            (sum2Sq - Math.pow(sum2, 2) / n));
+
+            if (den == 0) return 0;
+            return num / den;
         }
 
         //create data for correlation linear
@@ -218,6 +299,7 @@
                 .style("opacity", 0.9);
                 div.html("<b>" + d["name"] + ":" + "</b>" + "<br/>"  + "Height" + d["height"] + " (inch)" + "<br/>"  + "Weight" + d["weight"] + " (lb)" + "<br/>"  + "Batting Average "
                 + d["avg"] + "<br/>" + "Home runs" + d['HR'])
+                .attr("class", "player_information")
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
               })
@@ -288,7 +370,7 @@
             create_y_axis(variable2);
             create_regression();
 
-            } else {
+          } else {
               svg.select('.x_axis')
                 .remove();
 
@@ -317,6 +399,7 @@
                         return d;
                       });
 
+        //click-on function to update the grafic by choosed dimensions
         buttons.on("click", function(d){
               d3.select(".dimensions")
                 .selectAll("div")
