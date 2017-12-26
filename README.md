@@ -20,6 +20,17 @@ The viewer-driven narrative is able to decide if he wants have the height or wei
 Lastly, the viewer can mouse-over specific data points and get more detailed information about the name and the specific score of each variable. In summary, the viewer should be possible to detect patterns based on the available visualization and further information.
 
 # Feedback
+**Feedback 1. Person:**
+* Add instructions to start a python server at README.me so the reader is able to understand how to render the visualization
+* Add correlation line to better support the findings of the viewer
+* Add R-Square calculation information to give the viewer a concrete number
+
+**Feedback 2. Person:**
+* Add correlation line to better support the findings of the viewer
+* Add separate the correlation for handedness of the player
+
+**Feedback 3. Person:**
+* Give the reader the option to separate by handedness via buttons
 
 # Ressources
 * Scatterplot - https://bl.ocks.org/mbostock/3887118
