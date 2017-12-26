@@ -1,6 +1,12 @@
 # udacity_data_visualization
 The repository for my final submission in Udacity's Data Analyst Nanodegree.
 
+# Intructions to start
+
+1. To work on your data visualization, you will need to start a local server on your computer. To start a local web server, you will need to have Python 2.7.8 or higher installed on your machine.
+
+2. Once you have Python installed, you can start a local web server and view your data visualization. Remember, you must start your web server in the top level directory to serve all code and data files. If you do not use this folder as the root directory for the web server, be aware that you will need to change the file paths.
+
 # Summary
 
 **Dataset:**
@@ -26,19 +32,22 @@ Lastly, the viewer can mouse-over specific data points and get more detailed inf
 
 # Feedback
 **Feedback 1. Person:**
-* Add instructions to start a python server at README.me so the reader is able to understand how to render the visualization
-* Add correlation line to better support the findings of the viewer - DONE
-* Add R-Square calculation information to give the viewer a concrete number
+* Add instructions to start a python server at README.me so the reader is able to understand how to render the visualization (included in final_index.html)
+* Add correlation line to better support the findings of the viewer (included in final_index.html)
+* Add R-Square calculation information to give the viewer a concrete number (included in final_index.html)
 
 **Feedback 2. Person:**
-* Add correlation line to better support the findings of the viewer
-* Add separate the correlation for handedness of the player
+* Add correlation line to better support the findings of the viewer (included in final_index.html)
+* Add separate the correlation for handedness of the player (not included in the dataset)
 
 **Feedback 3. Person:**
-* Give the reader the option to separate by handedness via buttons
+* Give the reader the option to separate by handedness via buttons (not included in the dataset)
+
+**Reasoning:** A regression line got included, which updates automatically if the viewer switches the visualization. Moreover, if you mouse-over the visualization you can see the Pearson-correlation for the specific dimensions. The separation of the handedness was not included, as the results wouldn't differ significantly from the findings of the existing visualization.
 
 # Ressources
 * Scatterplot - https://bl.ocks.org/mbostock/3887118
 * Simple Scatterplot - https://stackoverflow.com/questions/10440646/a-simple-scatterplot-example-in-d3-js
 * mouseover-function - http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
 * regression-line - https://bl.ocks.org/nanu146/de5bd30782dfe18fa5efa0d8d299abce
+* pearsonCorrelation - https://gist.github.com/matt-west/6500993
