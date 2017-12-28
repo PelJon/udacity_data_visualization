@@ -15,6 +15,21 @@ Baseball Data
 **Reasoning:**		
 I want to explore if there is any correlation between home runs, batting averages and the handedness, weight or height of a player.
 
+**Findings:**
+
+**Comparison of height and batting average:**
+There is a weak correlation between the batting average and the height, which indicates that smaller players reach on average a higher batting average. As the correlation is not significant, just cannot be interpreted as a causation. The highest batting averages by small players are achieved by right-handers, while the overall highest batting averages are achieved by left-handers of any size.
+
+
+**Comparison of height and batting average:**
+Same as for height, the heavier the players are the lower is the batting average. Also, this correlation is very low and cannot indicate a causation. Nevertheless, all players of any height have a batting average between 0.2 and 0.3. Below that is a significant amount of right-handers.
+
+**Comparison Homeruns and Weight:**
+There is a weak, but an almost significant correlation between weight and home runs. The heavier the players are the more home runs they scored in their career. The highest home runs are achieved as well as by left- and right handers of any weight.
+
+**Comparison Homeruns and Height:**
+There is also a positive relationship between home runs and height. The taller a player is, the more home runs he scored in his career. The maximum amount of homers are scored by left- and right handers of any height.
+
 **Data Story:**
 The reader of the visualization which will be a viewer-driven narrative. The reader sees a scatterplot which shows the correlation between height and batting average. Through interactive buttons, the reader can choose also between other factors like weight and home runs.
 
