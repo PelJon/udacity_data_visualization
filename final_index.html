@@ -16,6 +16,13 @@
       border-radius: 8px;
       pointer-events: none;
     }
+    text.informational_text {
+      position: absolute;
+      left: 300px;
+      top: 555px;
+      width: 500px;
+      font-size: 1.3em;
+    }
     .pearson {
       position: absolute;
       text-align: left;
@@ -48,16 +55,31 @@
       stroke: #000;
       shape-rendering: crispEdges;
     }
-    div.dimensions div {
+    div.dimensions_x div {
         background-color: rgb(169,169,169);
         font-size: 1.45em;
         padding: 3px;
         margin: 7px;
       }
-    div.dimensions {
+    div.dimensions_x {
         position: fixed;
         top: 550px;
         left: 40px;
+        width: 100px;
+        text-align: center;
+      }
+    div.dimensions_y div {
+        background-color: rgb(169,169,169);
+        font-size: 1.45em;
+        padding: 3px;
+        margin: 7px;
+      }
+    div.dimensions_y {
+        position: fixed;
+        top: 550px;
+        left: 150px;
+        width: 100px;
+        text-align: center;
       }
   </style>
   <script type="text/javascript">
@@ -65,6 +87,7 @@
 
         //create headline for visualization
         d3.select("body")
+          .attr("class", "headline")
           .append("h2")
           .text("Batting average (Homeruns) by height (weight) of baseball players")
           .style("text-align", "center");
@@ -78,7 +101,8 @@
         var regression;
         var pearson_correlation;
         var length_sample = baseball_data.length;
-        var dimensions = ["Height", "Weight", "Batting Avg.", "Home runs"];
+        var dimensions_x = ["Height", "Weight"];
+        var dimensions_y = ["Batting Avg.", "Home runs"];
         var x_axis_dimension = "height";
         var y_axis_dimension = "avg";
 
@@ -332,14 +356,13 @@
               .style("text-anchor", "end")
               .text(function(d) {
                 var handedness_player = d
-                if (handedness_player == "R") {
-                  return "Right-hander";
-                } else if (handedness_player == "L") {
-                  return "Left-hander";
-                } else {
-                  return "Ambidextrous";
+                if (handedness_player == "R") {
+                    return "Right-hander";
+                } if (handedness_player == "L") {
+                    return "Left-hander";
                 }
-              });
+                  return "Ambidextrous";
+                });
             }
 
         //create first visualization
@@ -348,6 +371,12 @@
         create_dots(x_axis_dimension, y_axis_dimension)
         create_legend()
         create_regression()
+
+        //create text field for findings of vizualization
+        d3.select("body")
+          .append("text")
+          .attr("class", "informational_text")
+          .html("<b>" + "Comparison of height and batting average: " + "</b>" + "<br/>" + "<br/>" + "There is a weak correlation between the betting average and the height, which indicates that smaller players reach on average a higher batting average. As the correlation is not significant, just cannot be interpreted as a causation. The highest batting averages by small players are achieved by right-handers, while the overall highest batting averages are achieved by left-handers of any size.");
 
         //Update function to return the new axis/ new diagram
         function update(variable1, variable2, axis) {
@@ -387,21 +416,60 @@
             create_dots(variable1, variable2)
         }
 
+        function update_text(variable1, variable2) {
+
+            d3.selectAll(".informational_text")
+              .remove();
+
+            if (variable1 == "height" && variable2 == "HR") {
+              d3.select("body")
+                .append("text")
+                .attr("class", "informational_text")
+                .html("<b>" + "Comparison home runs and height: " + "</b>" + "<br/>" + "<br/>" + "There is also a positive relationship between home runs and height. The taller a player is, the more home runs he scored in his career. The maximum amount of homers are scored by left- and right handers of any height.");
+            } if (variable1 == "height" && variable2 == "avg") {
+              d3.select("body")
+                .append("text")
+                .attr("class", "informational_text")
+                .html("<b>" + "Comparison of height and batting average: " + "</b>" + "<br/>" + "<br/>" + "There is a weak correlation between the betting average and the height, which indicates that smaller players reach on average a higher batting average. As the correlation is not significant, just cannot be interpreted as a causation. The highest batting averages by small players are achieved by right-handers, while the overall highest batting averages are achieved by left-handers of any size.");
+            } if (variable1 == "weight" && variable2 == "HR") {
+              d3.select("body")
+                .append("text")
+                .attr("class", "informational_text")
+                .html("<b>" + "Comparison home runs and weight: " + "</b>" + "<br/>" + "<br/>" + "There is a weak, but almost significant correlation between weight and home runs. The heavier the players are the more home runs they scored in their career. The highest home runs are achieved as well as by left- and right handers of any weight.");
+            } if (variable1 == "weight" && variable2 == "avg") {
+              d3.select("body")
+                .append("text")
+                .attr("class", "informational_text")
+                .html("<b>" + "Comparison of weight and batting average: " + "</b>" + "<br/>" + "<br/>" + "Same as for height, the heavier the players are the lower is the batting average. Also this correlation is very low and cannot indicate a causation. Nevertheless all players of any height have a batting average between 0.2 and 0.3. Below that are a significant amount of right-handers.");
+            }
+        }
+
         //buttons to update the Scatterplot
-        var buttons = d3.select("body")
+        var buttons_1 = d3.select("body")
                       .append("div")
-                      .attr("class", "dimensions")
+                      .attr("class", "dimensions_x")
                       .selectAll("div")
-                      .data(dimensions)
+                      .data(dimensions_x)
                       .enter()
                       .append("div")
                       .text(function(d) {
                         return d;
                       });
 
+        var buttons_2 = d3.select("body")
+                          .append("div")
+                          .attr("class", "dimensions_y")
+                          .selectAll("div")
+                          .data(dimensions_y)
+                          .enter()
+                          .append("div")
+                          .text(function(d) {
+                              return d;
+                          });
+
         //click-on function to update the grafic by choosed dimensions
-        buttons.on("click", function(d){
-              d3.select(".dimensions")
+        buttons_1.on("click", function(d){
+              d3.select(".dimensions_x")
                 .selectAll("div")
                 .transition()
                 .duration(500)
@@ -416,16 +484,39 @@
 
                 if (d == "Height") {
                   update("height", y_axis_dimension, "x");
+                  update_text("height", y_axis_dimension);
                 } else if (d == "Weight") {
                   update("weight", y_axis_dimension, "x");
-                } else if (d == "Batting Avg.") {
-                  update(x_axis_dimension, "avg", "y");
-                } else if (d == "Home runs"){
-                  update(x_axis_dimension, "HR", "y");
+                  update_text("weight", y_axis_dimension);
                 } else {
                   throw error;
                 }
               })
+
+              buttons_2.on("click", function(d){
+                    d3.select(".dimensions_y")
+                      .selectAll("div")
+                      .transition()
+                      .duration(500)
+                      .style("color", "black")
+                      .style("background", "rgb(251,201,127)");
+
+                      d3.select(this)
+                          .transition()
+                          .duration(500)
+                          .style("background", "lightBlue")
+                          .style("color", "white");
+
+                      if (d == "Batting Avg.") {
+                        update(x_axis_dimension, "avg", "y");
+                        update_text(x_axis_dimension, "avg");
+                      } else if (d == "Home runs"){
+                        update(x_axis_dimension, "HR", "y");
+                        update_text(x_axis_dimension, "HR");
+                      } else {
+                        throw error;
+                      }
+                    })
     };
   </script>
 </head>
